@@ -1,0 +1,54 @@
+service: Plantiful-app-api
+app: plant-api
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: v1
+  region: us-east-1
+
+functions:
+  plantsAPI:
+    handler: Controller/plants.handler
+    events:
+        - http:
+            path: /health/
+            method: get
+        - http:
+            path: /plant/add/
+            method: put
+        - http:
+            path: /plants/
+            method: get
+        - http:
+            path: plant/{plant}
+            method: get
+        - http:
+            path: plants/{userplants}
+            method: get
+        - http:
+            path: plant/delete/{userplants}/
+            method: put
+  UserAPI:
+    handler: Controller/auth.handler
+    events:
+        - http:
+            path: /auth/{id}
+            method: get
+        - http:
+            path: /auth/register/
+            method: post
+        - http:
+            path: /auth/login
+            method: post
+        - http:
+            path: auth/update/{userid}
+            method: put
+        - http:
+            path: auth/delete/{userid}
+            method: delete
+ 
+            
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
