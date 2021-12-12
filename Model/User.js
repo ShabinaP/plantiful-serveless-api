@@ -27,18 +27,5 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-//for login to decrty the password or user update the password
-UserSchema.methods.compareUSerPassword = async function(userPassword) {
-  return await bcrypt.compare(userPassword, this.password)
-}
 
-// checks if password is encrypted, if not encrypts password
-// ti
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
-  }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
 module.exports = mongoose.model("User", UserSchema);
