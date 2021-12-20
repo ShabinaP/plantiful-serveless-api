@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
 const dbConnection = require('../dbConfigs');
 const plantServices = require('../Services/plants');
+const cors = require('cors');
+app.use(cors());
+app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -13,7 +16,18 @@ app.use(bodyParser.urlencoded({
 
 //  base url to test our API
 app.get('/health/', async (req, res) => {
-   await res.send("<h3>Welcome to the Product API for Plantiful Plant care!!</h3>")
+   const response = {
+      statusCode: 200,
+      headers: {
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify({
+         message: "succefull landing"
+      }),
+   };
+   res.sendStatus(200)
+
 })
 
 // push plant into user plants array
@@ -45,11 +59,22 @@ app.get('/plants/', async (req, res) => {
    try {
       await dbConnection();
       const allPlants = await plantServices.getAllPlants();
-      if (allPlants) {
-         return res.status(200).send({
-            data: allPlants
-         })
+      return {
+
+         headers: {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*',
+            "Accept": "*/*",
+            "Content-Type": "application/json"
+         } ,        
+         response: res.status(200).send(allPlants),
       }
+
+
+
+
+
    } catch (error) {
       //  handle errors here
       console.log(error, "error!!");

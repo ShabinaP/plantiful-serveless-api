@@ -7,7 +7,8 @@ const dbConnection = require('../dbConfigs');
 const userServices = require('../Services/auth');
 app.use(bodyParser.json());
 const genWebToken = require('../Services/genwebToken')
-
+app.use(cors());
+app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 }));
 app.use(bodyParser.urlencoded({
   extended: true
 }));

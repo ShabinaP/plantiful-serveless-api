@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
 const dbConnection = require('../dbConfigs');
 const ProductService = require('../Services/product');
-
+app.use(cors());
+app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

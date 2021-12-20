@@ -2,7 +2,6 @@ const Plant = require('../Model/plant');
 const User = require('../Model/User');
 
 module.exports = {
-  //add plant into user plants
   async pushPlantToUser(userId, plantId) {
     let user = await User.findById(userId);
     if (!user.userPlants.includes(plantId)) {
@@ -16,16 +15,11 @@ module.exports = {
   },
   async getAllPlants() {
 
-    let plant = await Plant.find();
+    let plant = await Plant.find().limit(200);
     if (plant) return plant;
     return "Error fetching products from db"
   },
 
-  // async getPlantByName(productId)  {
-  //   let plant = await Plant.findOne(productId);
-  //   if(plant) return plant;
-  //   return "Error fetching product from db";
-  // },
   async getPlantByName(plantname) {
     let plant = await Plant.find({
       latinName: plantname
@@ -54,10 +48,6 @@ module.exports = {
     return "Plant not found";
 
   },
-
-
-
-
 
 
 };

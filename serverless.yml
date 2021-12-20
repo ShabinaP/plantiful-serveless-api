@@ -1,5 +1,11 @@
 service: Plantiful-app-api
 app: plant-api
+Globals:
+    Api:
+     Cors:
+       AllowMethods: "*"
+       AllowHeaders: "*"
+       AllowOrigins: "*"
 
 provider:
   name: aws
@@ -20,6 +26,7 @@ functions:
         - http:
             path: /plants/
             method: get
+          
         - http:
             path: plant/{plant}
             method: get
@@ -47,8 +54,34 @@ functions:
         - http:
             path: auth/delete/{userid}
             method: delete
+  Notification:
+    handler: Controller/notification.handler
+    events:
+        - http:
+            path: /notification/create
+            method: post
+        - http:
+            path: /notification/cron-get/
+            method: get
+        - http:
+            path: /notification/cron-update
+            method: get
+        - http:
+            path: notification/watering/
+            method: get
+        - http:
+            path: notification/status/update
+            method: put
  
-            
+  SendGridEmail:
+    handler: Email/mailServices.handler
+    events:
+         # Invoke Lambda function every minute
+         # serverless.yml
+
+
+
+      
 plugins:
   - serverless-offline
   - serverless-dotenv-plugin
