@@ -72,8 +72,13 @@ functions:
         - http:
             path: notification/status/update
             method: put
- 
-  SendGridEmail:
+  mailGunEmail:
+    handler: Controller/email.handler
+    events:
+        - http:
+            path: /mail/send
+            method: post
+  mailGundEmail:
     handler: Email/mailServices.handler
     events:
          # Invoke Lambda function every minute

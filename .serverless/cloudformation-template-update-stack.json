@@ -89,10 +89,16 @@
         "LogGroupName": "/aws/lambda/Plantiful-app-api-v1-Notification"
       }
     },
-    "SendGridEmailLogGroup": {
+    "MailGunEmailLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/Plantiful-app-api-v1-SendGridEmail"
+        "LogGroupName": "/aws/lambda/Plantiful-app-api-v1-mailGunEmail"
+      }
+    },
+    "MailGundEmailLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/Plantiful-app-api-v1-mailGundEmail"
       }
     },
     "IamRoleLambdaExecution": {
@@ -179,7 +185,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
+          "S3Key": "serverless/Plantiful-app-api/v1/1640016033730-2021-12-20T16:00:33.730Z/Plantiful-app-api.zip"
         },
         "Handler": "Controller/plants.handler",
         "Runtime": "nodejs14.x",
@@ -191,7 +197,9 @@
             "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
             "LocalDB": "mongodb://localhost:27017/plantiful",
             "JWT_SECRET": "youarenotthatboldmatestopmoaning",
-            "SENDGRID_API_KEY": "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"
+            "SENDGRID_API_KEY": "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",
+            "MAIL_GUN_API": "940cad22b92813d3dbfdf45c5977fe6e-8ed21946-6c92e0c9",
+            "MAIL_GUN_DOMAIN": "sandbox20aa1382cc1a4b8db47df89b5d5af804.mailgun.org"
           }
         },
         "Role": {
@@ -212,7 +220,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
+          "S3Key": "serverless/Plantiful-app-api/v1/1640016033730-2021-12-20T16:00:33.730Z/Plantiful-app-api.zip"
         },
         "Handler": "Controller/auth.handler",
         "Runtime": "nodejs14.x",
@@ -224,7 +232,9 @@
             "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
             "LocalDB": "mongodb://localhost:27017/plantiful",
             "JWT_SECRET": "youarenotthatboldmatestopmoaning",
-            "SENDGRID_API_KEY": "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"
+            "SENDGRID_API_KEY": "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",
+            "MAIL_GUN_API": "940cad22b92813d3dbfdf45c5977fe6e-8ed21946-6c92e0c9",
+            "MAIL_GUN_DOMAIN": "sandbox20aa1382cc1a4b8db47df89b5d5af804.mailgun.org"
           }
         },
         "Role": {
@@ -245,7 +255,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
+          "S3Key": "serverless/Plantiful-app-api/v1/1640016033730-2021-12-20T16:00:33.730Z/Plantiful-app-api.zip"
         },
         "Handler": "Controller/notification.handler",
         "Runtime": "nodejs14.x",
@@ -257,7 +267,9 @@
             "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
             "LocalDB": "mongodb://localhost:27017/plantiful",
             "JWT_SECRET": "youarenotthatboldmatestopmoaning",
-            "SENDGRID_API_KEY": "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"
+            "SENDGRID_API_KEY": "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",
+            "MAIL_GUN_API": "940cad22b92813d3dbfdf45c5977fe6e-8ed21946-6c92e0c9",
+            "MAIL_GUN_DOMAIN": "sandbox20aa1382cc1a4b8db47df89b5d5af804.mailgun.org"
           }
         },
         "Role": {
@@ -271,18 +283,18 @@
         "NotificationLogGroup"
       ]
     },
-    "SendGridEmailLambdaFunction": {
+    "MailGunEmailLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
+          "S3Key": "serverless/Plantiful-app-api/v1/1640016033730-2021-12-20T16:00:33.730Z/Plantiful-app-api.zip"
         },
-        "Handler": "Email/mailServices.handler",
+        "Handler": "Controller/email.handler",
         "Runtime": "nodejs14.x",
-        "FunctionName": "Plantiful-app-api-v1-SendGridEmail",
+        "FunctionName": "Plantiful-app-api-v1-mailGunEmail",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
@@ -290,7 +302,9 @@
             "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
             "LocalDB": "mongodb://localhost:27017/plantiful",
             "JWT_SECRET": "youarenotthatboldmatestopmoaning",
-            "SENDGRID_API_KEY": "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"
+            "SENDGRID_API_KEY": "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",
+            "MAIL_GUN_API": "940cad22b92813d3dbfdf45c5977fe6e-8ed21946-6c92e0c9",
+            "MAIL_GUN_DOMAIN": "sandbox20aa1382cc1a4b8db47df89b5d5af804.mailgun.org"
           }
         },
         "Role": {
@@ -301,47 +315,92 @@
         }
       },
       "DependsOn": [
-        "SendGridEmailLogGroup"
+        "MailGunEmailLogGroup"
       ]
     },
-    "PlantsAPILambdaVersionYRyAnIjXAIQQqNWiJkq3JkL0EYtwP0DHL70F4Q7Ez1c": {
+    "MailGundEmailLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/Plantiful-app-api/v1/1640016033730-2021-12-20T16:00:33.730Z/Plantiful-app-api.zip"
+        },
+        "Handler": "Email/mailServices.handler",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "Plantiful-app-api-v1-mailGundEmail",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+            "LocalDB": "mongodb://localhost:27017/plantiful",
+            "JWT_SECRET": "youarenotthatboldmatestopmoaning",
+            "SENDGRID_API_KEY": "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",
+            "MAIL_GUN_API": "940cad22b92813d3dbfdf45c5977fe6e-8ed21946-6c92e0c9",
+            "MAIL_GUN_DOMAIN": "sandbox20aa1382cc1a4b8db47df89b5d5af804.mailgun.org"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "MailGundEmailLogGroup"
+      ]
+    },
+    "PlantsAPILambdaVersion627FBlTeMHuNjS4VK7AfWgXZ7J82R5ZRvLc27Sjo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PlantsAPILambdaFunction"
         },
-        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
+        "CodeSha256": "Y7x3qAxGFMIUJ35YIbpmT3TxbYj3yKa2AXalKNeVChw="
       }
     },
-    "UserAPILambdaVersionkv7LDnkKIzazrPcoHU13s8gnh8ZBsiYnVP28PVAg": {
+    "UserAPILambdaVersionImcTze2KZFb3UFNAWNQs2WMJWBktU1wCL52hFbST0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserAPILambdaFunction"
         },
-        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
+        "CodeSha256": "Y7x3qAxGFMIUJ35YIbpmT3TxbYj3yKa2AXalKNeVChw="
       }
     },
-    "NotificationLambdaVersionZiVXEkTeHoME5mxs07BzGDXIVjWyJF0uBPzEDQFEj00": {
+    "NotificationLambdaVersionSJ73IrUMKtfwCnJLGjWEz4v0tePB6T6K9N9kQ2j0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "NotificationLambdaFunction"
         },
-        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
+        "CodeSha256": "Y7x3qAxGFMIUJ35YIbpmT3TxbYj3yKa2AXalKNeVChw="
       }
     },
-    "SendGridEmailLambdaVersiontAq5ej0x1tuKhZ6lRWW8oXgc9P6D5lJtgLHaRMKHA": {
+    "MailGunEmailLambdaVersionZFWJpo4rLjnliyGp4jcHeBRAHD9Qv19iOzhx6h4Jqg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "SendGridEmailLambdaFunction"
+          "Ref": "MailGunEmailLambdaFunction"
         },
-        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
+        "CodeSha256": "Y7x3qAxGFMIUJ35YIbpmT3TxbYj3yKa2AXalKNeVChw="
+      }
+    },
+    "MailGundEmailLambdaVersioniZN3tIqt3cPOrsCygQCgP6XVSfonofggS2UxmFGzGKQ": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "MailGundEmailLambdaFunction"
+        },
+        "CodeSha256": "Y7x3qAxGFMIUJ35YIbpmT3TxbYj3yKa2AXalKNeVChw="
       }
     },
     "ApiGatewayRestApi": {
@@ -642,6 +701,33 @@
           "Ref": "ApiGatewayResourceNotificationStatus"
         },
         "PathPart": "update",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceMail": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "mail",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceMailSend": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceMail"
+        },
+        "PathPart": "send",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -1383,7 +1469,53 @@
         "NotificationLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1639872311196": {
+    "ApiGatewayMethodMailSendPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceMailSend"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "MailGunEmailLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "MailGunEmailLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayDeployment1640016005244": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -1407,7 +1539,8 @@
         "ApiGatewayMethodNotificationCronDashgetGet",
         "ApiGatewayMethodNotificationCronDashupdateGet",
         "ApiGatewayMethodNotificationWateringGet",
-        "ApiGatewayMethodNotificationStatusUpdatePut"
+        "ApiGatewayMethodNotificationStatusUpdatePut",
+        "ApiGatewayMethodMailSendPost"
       ]
     },
     "PlantsAPILambdaPermissionApiGateway": {
@@ -1520,6 +1653,43 @@
           ]
         }
       }
+    },
+    "MailGunEmailLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "MailGunEmailLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
     }
   },
   "Outputs": {
@@ -1534,7 +1704,7 @@
     "PlantsAPILambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PlantsAPILambdaVersionYRyAnIjXAIQQqNWiJkq3JkL0EYtwP0DHL70F4Q7Ez1c"
+        "Ref": "PlantsAPILambdaVersion627FBlTeMHuNjS4VK7AfWgXZ7J82R5ZRvLc27Sjo"
       },
       "Export": {
         "Name": "sls-Plantiful-app-api-v1-PlantsAPILambdaFunctionQualifiedArn"
@@ -1543,7 +1713,7 @@
     "UserAPILambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserAPILambdaVersionkv7LDnkKIzazrPcoHU13s8gnh8ZBsiYnVP28PVAg"
+        "Ref": "UserAPILambdaVersionImcTze2KZFb3UFNAWNQs2WMJWBktU1wCL52hFbST0"
       },
       "Export": {
         "Name": "sls-Plantiful-app-api-v1-UserAPILambdaFunctionQualifiedArn"
@@ -1552,19 +1722,28 @@
     "NotificationLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "NotificationLambdaVersionZiVXEkTeHoME5mxs07BzGDXIVjWyJF0uBPzEDQFEj00"
+        "Ref": "NotificationLambdaVersionSJ73IrUMKtfwCnJLGjWEz4v0tePB6T6K9N9kQ2j0"
       },
       "Export": {
         "Name": "sls-Plantiful-app-api-v1-NotificationLambdaFunctionQualifiedArn"
       }
     },
-    "SendGridEmailLambdaFunctionQualifiedArn": {
+    "MailGunEmailLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "SendGridEmailLambdaVersiontAq5ej0x1tuKhZ6lRWW8oXgc9P6D5lJtgLHaRMKHA"
+        "Ref": "MailGunEmailLambdaVersionZFWJpo4rLjnliyGp4jcHeBRAHD9Qv19iOzhx6h4Jqg"
       },
       "Export": {
-        "Name": "sls-Plantiful-app-api-v1-SendGridEmailLambdaFunctionQualifiedArn"
+        "Name": "sls-Plantiful-app-api-v1-MailGunEmailLambdaFunctionQualifiedArn"
+      }
+    },
+    "MailGundEmailLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "MailGundEmailLambdaVersioniZN3tIqt3cPOrsCygQCgP6XVSfonofggS2UxmFGzGKQ"
+      },
+      "Export": {
+        "Name": "sls-Plantiful-app-api-v1-MailGundEmailLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {

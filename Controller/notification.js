@@ -1,6 +1,7 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const dbConnection = require('../dbConfigs');
 const notificationServices = require('../Services/notification');
