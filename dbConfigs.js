@@ -10,7 +10,7 @@ const connectToDatabase = async () => {
   }
 
   console.log('using new database connection');
-  const database = await mongoose.connect(process.env.LocalDB, {useNewUrlParser: true});
+  const database = await mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true});
   isConnected = database.connections[0].readyState;
   // return isConnected;
 };

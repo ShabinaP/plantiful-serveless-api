@@ -1,12 +1,18 @@
 const User = require('../Model/User');
 const { getUserPlants } = require('./plants');
 const data = require('./auth')
+const genToken = require('../Services/genwebToken')
 module.exports = {
 async createUser (user) {
   let result = await User.create(user);
-  if(result) {
+  const {password, _id, ...others} = result._doc
+  
+  if(result)
+   {
+    
     return {
-      data: user,
+      data: others,
+      token:genToken(_id),
       message: "user successfully created!"
 };
   }
@@ -24,6 +30,20 @@ async getUser(userid) {
   }
 
 },
+  async userLogin(email, password) {
+    const user = await User.findOne({email})
+    if(user && (await user.compareUSerPassword(password))){
+      const {password, ...others}= user._doc
+      return {
+        others, 
+        token:genToken(others)
+      } 
+    } else {
+      return {
+        message: "Credential invalid"
+      }
+    }
+  },
  async updatedUser(userid, updateField) {
    const updatedUser = await User.findByIdAndUpdate( userid,{$set :updateField }, {new: true}   )
    if(updatedUser) {
@@ -44,8 +64,6 @@ async getUser(userid) {
    }
    return "Error deleting  user"
  },
-async userLogin()
-
 
 };
 

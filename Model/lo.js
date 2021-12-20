@@ -1,27 +1,7 @@
-const mongoose = require("mongoose");
-const PlanttSchema = new mongoose.Schema (
-   {
-    plantId: {type: String},
-    latinName: {type: String},
-    familyName: {type: String},
-    humidity: {type: String},
-    watering: {type: String},
-    toxicity: {type: String},
-    temperature: {type: Number},
-    airPurifyer: {type: String},
-    childPetSafe: {type: String},
-    origin: {type: String},
-    username: {type: String},
-    likes: { type: Number, default: 0 },
-    likedBy: { type: Array },
-    dislikes: { type: Number, default: 0 },
-    dislikedBy: { type: Array },
-  },
-  { timestamps: true }
-); 
+const addWeeks = require('date-fns/addWeeks')
+const addMonth = require('date-fns/addMonths')
+const today = new Date()
+const frequency = "one"
 
-const ProductModel = mongoose.model("plant", PlantSchema);
-module.exports = ProductModel;
-
-
-
+let nextNotification = (frequency === "weekly") ? addWeeks(today, 1) : (frequency === "two weekly") ? addWeeks(today, 2) : addMonth(today, 1)
+console.log(nextNotification)

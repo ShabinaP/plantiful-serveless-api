@@ -83,6 +83,18 @@
         "LogGroupName": "/aws/lambda/Plantiful-app-api-v1-UserAPI"
       }
     },
+    "NotificationLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/Plantiful-app-api-v1-Notification"
+      }
+    },
+    "SendGridEmailLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/Plantiful-app-api-v1-SendGridEmail"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -167,7 +179,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Plantiful-app-api/v1/1638982027382-2021-12-08T16:47:07.382Z/Plantiful-app-api.zip"
+          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
         },
         "Handler": "Controller/plants.handler",
         "Runtime": "nodejs14.x",
@@ -177,7 +189,9 @@
         "Environment": {
           "Variables": {
             "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-            "LocalDB": "mongodb://localhost:27017/plantiful"
+            "LocalDB": "mongodb://localhost:27017/plantiful",
+            "JWT_SECRET": "youarenotthatboldmatestopmoaning",
+            "SENDGRID_API_KEY": "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"
           }
         },
         "Role": {
@@ -198,7 +212,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Plantiful-app-api/v1/1638982027382-2021-12-08T16:47:07.382Z/Plantiful-app-api.zip"
+          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
         },
         "Handler": "Controller/auth.handler",
         "Runtime": "nodejs14.x",
@@ -208,7 +222,9 @@
         "Environment": {
           "Variables": {
             "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-            "LocalDB": "mongodb://localhost:27017/plantiful"
+            "LocalDB": "mongodb://localhost:27017/plantiful",
+            "JWT_SECRET": "youarenotthatboldmatestopmoaning",
+            "SENDGRID_API_KEY": "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"
           }
         },
         "Role": {
@@ -222,24 +238,110 @@
         "UserAPILogGroup"
       ]
     },
-    "PlantsAPILambdaVersionR6mI24UxTxT04Sv1WDRKgsWA2nGUKNHCMrv8SSys": {
+    "NotificationLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
+        },
+        "Handler": "Controller/notification.handler",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "Plantiful-app-api-v1-Notification",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+            "LocalDB": "mongodb://localhost:27017/plantiful",
+            "JWT_SECRET": "youarenotthatboldmatestopmoaning",
+            "SENDGRID_API_KEY": "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"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "NotificationLogGroup"
+      ]
+    },
+    "SendGridEmailLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/Plantiful-app-api/v1/1639872332135-2021-12-19T00:05:32.135Z/Plantiful-app-api.zip"
+        },
+        "Handler": "Email/mailServices.handler",
+        "Runtime": "nodejs14.x",
+        "FunctionName": "Plantiful-app-api-v1-SendGridEmail",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "MONGO_URL": "mongodb+srv://muudi:dObmtV3s9ImGf5bF@cluster0.qvyx8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+            "LocalDB": "mongodb://localhost:27017/plantiful",
+            "JWT_SECRET": "youarenotthatboldmatestopmoaning",
+            "SENDGRID_API_KEY": "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"
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "SendGridEmailLogGroup"
+      ]
+    },
+    "PlantsAPILambdaVersionYRyAnIjXAIQQqNWiJkq3JkL0EYtwP0DHL70F4Q7Ez1c": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PlantsAPILambdaFunction"
         },
-        "CodeSha256": "/61rWaezt/jFvB+XbgaFQTsJLZqE6ViEHbOlkyZjmV8="
+        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
       }
     },
-    "UserAPILambdaVersionjhgZYA5wOUNda83zpSzp9FAXQ7jy5COQWl7ZCJTQnc": {
+    "UserAPILambdaVersionkv7LDnkKIzazrPcoHU13s8gnh8ZBsiYnVP28PVAg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserAPILambdaFunction"
         },
-        "CodeSha256": "/61rWaezt/jFvB+XbgaFQTsJLZqE6ViEHbOlkyZjmV8="
+        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
+      }
+    },
+    "NotificationLambdaVersionZiVXEkTeHoME5mxs07BzGDXIVjWyJF0uBPzEDQFEj00": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "NotificationLambdaFunction"
+        },
+        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
+      }
+    },
+    "SendGridEmailLambdaVersiontAq5ej0x1tuKhZ6lRWW8oXgc9P6D5lJtgLHaRMKHA": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "SendGridEmailLambdaFunction"
+        },
+        "CodeSha256": "KjOVf7noAvLaiqcpcvryUTTZ3wTcdKdnRX/jrgCqObI="
       }
     },
     "ApiGatewayRestApi": {
@@ -453,6 +555,93 @@
           "Ref": "ApiGatewayResourceAuthDelete"
         },
         "PathPart": "{userid}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceNotification": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "notification",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceNotificationCreate": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceNotification"
+        },
+        "PathPart": "create",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceNotificationCronDashget": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceNotification"
+        },
+        "PathPart": "cron-get",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceNotificationCronDashupdate": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceNotification"
+        },
+        "PathPart": "cron-update",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceNotificationWatering": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceNotification"
+        },
+        "PathPart": "watering",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceNotificationStatus": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceNotification"
+        },
+        "PathPart": "status",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceNotificationStatusUpdate": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceNotificationStatus"
+        },
+        "PathPart": "update",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -964,7 +1153,237 @@
         "UserAPILambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1638982013176": {
+    "ApiGatewayMethodNotificationCreatePost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceNotificationCreate"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "NotificationLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "NotificationLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodNotificationCronDashgetGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceNotificationCronDashget"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "NotificationLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "NotificationLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodNotificationCronDashupdateGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceNotificationCronDashupdate"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "NotificationLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "NotificationLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodNotificationWateringGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceNotificationWatering"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "NotificationLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "NotificationLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayMethodNotificationStatusUpdatePut": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "PUT",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceNotificationStatusUpdate"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "NotificationLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "NotificationLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayDeployment1639872311196": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -983,7 +1402,12 @@
         "ApiGatewayMethodAuthRegisterPost",
         "ApiGatewayMethodAuthLoginPost",
         "ApiGatewayMethodAuthUpdateUseridVarPut",
-        "ApiGatewayMethodAuthDeleteUseridVarDelete"
+        "ApiGatewayMethodAuthDeleteUseridVarDelete",
+        "ApiGatewayMethodNotificationCreatePost",
+        "ApiGatewayMethodNotificationCronDashgetGet",
+        "ApiGatewayMethodNotificationCronDashupdateGet",
+        "ApiGatewayMethodNotificationWateringGet",
+        "ApiGatewayMethodNotificationStatusUpdatePut"
       ]
     },
     "PlantsAPILambdaPermissionApiGateway": {
@@ -1059,6 +1483,43 @@
           ]
         }
       }
+    },
+    "NotificationLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "NotificationLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
     }
   },
   "Outputs": {
@@ -1073,7 +1534,7 @@
     "PlantsAPILambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PlantsAPILambdaVersionR6mI24UxTxT04Sv1WDRKgsWA2nGUKNHCMrv8SSys"
+        "Ref": "PlantsAPILambdaVersionYRyAnIjXAIQQqNWiJkq3JkL0EYtwP0DHL70F4Q7Ez1c"
       },
       "Export": {
         "Name": "sls-Plantiful-app-api-v1-PlantsAPILambdaFunctionQualifiedArn"
@@ -1082,10 +1543,28 @@
     "UserAPILambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserAPILambdaVersionjhgZYA5wOUNda83zpSzp9FAXQ7jy5COQWl7ZCJTQnc"
+        "Ref": "UserAPILambdaVersionkv7LDnkKIzazrPcoHU13s8gnh8ZBsiYnVP28PVAg"
       },
       "Export": {
         "Name": "sls-Plantiful-app-api-v1-UserAPILambdaFunctionQualifiedArn"
+      }
+    },
+    "NotificationLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "NotificationLambdaVersionZiVXEkTeHoME5mxs07BzGDXIVjWyJF0uBPzEDQFEj00"
+      },
+      "Export": {
+        "Name": "sls-Plantiful-app-api-v1-NotificationLambdaFunctionQualifiedArn"
+      }
+    },
+    "SendGridEmailLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "SendGridEmailLambdaVersiontAq5ej0x1tuKhZ6lRWW8oXgc9P6D5lJtgLHaRMKHA"
+      },
+      "Export": {
+        "Name": "sls-Plantiful-app-api-v1-SendGridEmailLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {
