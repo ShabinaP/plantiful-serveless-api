@@ -3,7 +3,7 @@ const mailgun = require('mailgun-js')(emailConfig);
 exports.sendEmail = (recipient, message) =>
   new Promise((resolve, reject) => {
     const data = {
-      from: 'Plantiful Notification <info@eastberry.com>',
+      from: 'Plantiful Notification <proccess.env.sender>',
       to: recipient,
       subject: message.subject,
       text: message.text,
